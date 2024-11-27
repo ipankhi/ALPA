@@ -70,7 +70,7 @@ python3 main.py \
 ---
 
 ## Evaluation
-You can evaluate the trained model by using a validation dataset and configuring the arguments accordingly. Replace `--train=1` with `--train=0` to enable evaluation mode.
+You can evaluate the trained model use test.py
 
 ---
 
@@ -85,7 +85,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 ## Contact
-For questions or feedback, feel free to reach out to [your_email@example.com](mailto:your_email@example.com).
+For questions or feedback, feel free to reach out to [your_email@example.com](mailto:pankhikashyap.research@gmail.com).
 
 --- 
 

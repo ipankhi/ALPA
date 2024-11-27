@@ -1,6 +1,3 @@
-Here’s an improved and polished version of your README section:
-
----
 
 # ALPA: Taming the Tail  
 This repository contains the implementation of the paper **"Taming the Tail: Leveraging Asymmetric Loss and Padé Approximation to Overcome Medical Image Long-Tailed Class Imbalance"**. The code addresses challenges in medical imaging caused by long-tailed class distributions, introducing an innovative approach based on asymmetric loss functions and Padé approximations to improve classification performance on imbalanced datasets.

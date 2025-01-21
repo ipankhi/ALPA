@@ -35,4 +35,14 @@ def get_args_parser():
     parser.add_argument("--save_model", type=int, default=0, required=False)
 
     parser.add_argument("--is_master", type=int, required=False)
+    
+    parser.add_argument("--n_splits", type=int, required=False, default=5)
+
+    # loss params 
+    parser.add_argument("--gamma_neg",default=4, type=int, required=False)
+    parser.add_argument("--gamma_pos",default=0, type=int, required=False)
+    parser.add_argument("--clip",default=0.05, type=float, required=False)
+    parser.add_argument("--alpha",default=0.875, type=float, required=False)
+    parser.add_argument("--beta",default=1.625, type=float, required=False)
+    parser.add_argument("--lamb",default=0, type=int, required=False)
     return parser.parse_args()

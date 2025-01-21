@@ -12,6 +12,10 @@ This repository contains the implementation of the paper **"Taming the Tail: Lev
 
 ---
 
+## Loss function code
+- **ALPA** code is there in models/get_optimizer.py 
+
+---
 ## Installation
 1. Clone the repository:
    ```bash

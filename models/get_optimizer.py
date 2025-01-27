@@ -5,7 +5,7 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.autograd import Variable
 import numpy as np 
-import pandas as pd 
+
 
 class ALPA(nn.Module):
     def __init__(self, gamma_neg=0, gamma_pos=0, clip=0.05, alpha=0, beta=0):

@@ -4,7 +4,6 @@ import torch.optim as optim
 from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.autograd import Variable
-import numpy as np 
 
 
 class ALPA(nn.Module):

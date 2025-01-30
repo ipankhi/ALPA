@@ -6,8 +6,9 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 
 
+
 class ALPA(nn.Module):
-    def __init__(self, gamma_neg=0, gamma_pos=0, clip=0.05, alpha=0, beta=0):
+    def __init__(self, gamma_neg=4, gamma_pos=0, clip=0.05, alpha=0.875, beta=1.625, disable_torch_grad_focal_loss=False):
         super(ALPA, self).__init__()
         self.gamma_neg = gamma_neg
         self.gamma_pos = gamma_pos
@@ -15,6 +16,10 @@ class ALPA(nn.Module):
         self.alpha = alpha
         self.beta = beta
 
+        # Initialize missing attribute
+        self.disable_torch_grad_focal_loss = disable_torch_grad_focal_loss
+
+        # Parameters for Pade approximation
         self.a_0 = -(3/2)
         self.a_1 = 3/2
         self.b_1 = 0
@@ -24,6 +29,7 @@ class ALPA(nn.Module):
 
     def pade_approximation_plus(self, p, a_0, a_1, b_1):
         return (a_0 + a_1 * p) / (1 + b_1 * p)
+    
     def pade_approximation_minus(self, p, c_0, c_1, d_1):
         return (c_0 + c_1 * p) / (1 + d_1 * p)
 
@@ -39,12 +45,12 @@ class ALPA(nn.Module):
 
         # Asymmetric Clipping
         if self.clip is not None and self.clip > 0:
-            xs_neg =  (xs_neg + self.clip).clamp(max=1)
+            xs_neg = (xs_neg + self.clip).clamp(max=1)
         
         # Basic Pade approximation polynomials 
         L_plus = self.pade_approximation_plus(xs_pos, self.a_0, self.a_1, self.b_1)
         L_minus = self.pade_approximation_minus(xs_neg, self.c_0, self.c_1, self.d_1)
-        loss = (self.alpha* y * torch.pow((xs_neg),self.gamma_pos) * L_plus) +(self.beta * (1-y) * torch.pow((xs_pos), self.gamma_neg) * L_minus)
+        loss = (self.alpha * y * torch.pow(xs_neg, self.gamma_pos) * L_plus) + (self.beta * (1 - y) * torch.pow(xs_pos, self.gamma_neg) * L_minus)
 
         # Asymmetric Focusing
         if self.gamma_neg > 0 or self.gamma_pos > 0:
@@ -59,7 +65,7 @@ class ALPA(nn.Module):
                 torch.set_grad_enabled(True)
             loss *= one_sided_w
 
-    return -torch.sum(loss)
+        return -torch.sum(loss)
 
 
 def make_loss_optimizer(args, model):
